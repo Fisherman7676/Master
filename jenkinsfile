@@ -1,15 +1,15 @@
 pipeline {
     agent any
     environment{
-        project1="https://github.com/Fisherman7676/Master.git"
-        project2="https://github.com/Fisherman7676/slave.git"
+        project1= "https://github.com/Fisherman7676/Master.git"
+        project2= "https://github.com/Fisherman7676/slave.git"
     }
     
     stages {
         stage('set config') {
             steps {
                 sh 'git config --global user.mail "graham.dean@sky.com'
-                sh 'git config --global user.name "Fisherman7676'
+                sh 'git config --global user.name "Fisherman7676"'
                 sh 'got confif --global credential.helper cache'
                 sh "git config --global credential.helper 'cache --timeout4500"
             }
