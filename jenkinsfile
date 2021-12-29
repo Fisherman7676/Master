@@ -4,14 +4,13 @@ pipeline {
         project1= "https://github.com/Fisherman7676/Master.git"
         project2= "https://github.com/Fisherman7676/slave.git"
     }
-    
     stages {
         stage('set config') {
             steps {
-                sh 'git config --global user.mail "graham.dean@sky.com'
+                sh 'git config --global user.mail "graham.dean@sky.com"'
                 sh 'git config --global user.name "Fisherman7676"'
-                sh 'got confif --global credential.helper cache'
-                sh "git config --global credential.helper 'cache --timeout4500"
+                sh 'git config --global credential.helper cache'
+                sh "git config --global credential.helper 'cache --timeout4500'"
             }
         }
     stage ('set git credential'){
@@ -20,7 +19,6 @@ pipeline {
             git branch:'feature', credentialsId: 'github_connection', url: 'https://github.com/Fisherman7676/slave.git'        
             }
         }
-
     stage('sync master'){
         steps{
             sh script.sh
@@ -28,15 +26,13 @@ pipeline {
             dir("master.git"){
                 sh 'git push --mirror ${https://github.com/Fisherman7676/slave.git}'
                 sh 'git fetch origin --tags'
-
             // update the local copy with the second repository
             sh 'git fetch second --tags'
-
             // sync back the second repository
             sh 'git push second --all'
             sh 'git push second --tags'
-
-
         }
     }
+}
+}
 }
