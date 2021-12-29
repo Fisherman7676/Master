@@ -15,19 +15,24 @@ pipeline {
         }
     stage ('set git credential'){
         steps{
-            git branch:'feature', credentialsId: 'github_connection', url: 'https://github.com/Fisherman7676/Master.git'
-            git branch:'feature', credentialsId: 'github_connection', url: 'https://github.com/Fisherman7676/slave.git'        
+            git credentialsId: 'github_connection', url: 'https://github.com/Fisherman7676/Master.git'
+            git credentialsId: 'github_connection', url: 'https://github.com/Fisherman7676/slave.git'        
             }
         }
     stage('sync master'){
         steps{
             sh script.sh
-            sh 'git clone -- ${://github.com/Fisherman7676/Master.git}master.git'
+            sh 'git clone --bare ${://github.com/Fisherman7676/Master.git}master.git'
             dir("master.git"){
-                sh 'git push --mirror ${https://github.com/Fisherman7676/slave.git}'
+                // add remote repo
+                sh 'git remote add --mirror=fetch second ${https://github.com/Fisherman7676/slave.git}'
+                
+                //update loacl from first
                 sh 'git fetch origin --tags'
+                
             // update the local copy with the second repository
             sh 'git fetch second --tags'
+            
             // sync back the second repository
             sh 'git push second --all'
             sh 'git push second --tags'
