@@ -22,7 +22,7 @@ pipeline {
     stage('sync master'){
         steps{
             sh script.sh
-            sh 'git clone --bare ${://github.com/Fisherman7676/Master.git}master.git'
+            sh 'git clone --mirror ${://github.com/Fisherman7676/Master.git}master.git'
             dir("master.git"){
                 // add remote repo
                 sh 'git remote add --mirror=fetch Slave ${https://github.com/Fisherman7676/Slave.git}'
