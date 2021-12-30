@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment{
         project1= "https://github.com/Fisherman7676/Master.git"
-        project2= "https://github.com/Fisherman7676/slave.git"
+        project2= "https://github.com/Fisherman7676/Slave.git"
     }
     stages {
         stage('set config') {
@@ -16,7 +16,7 @@ pipeline {
     stage ('set git credential'){
         steps{
             git credentialsId: 'github_connection', url: 'https://github.com/Fisherman7676/Master.git'
-            git credentialsId: 'github_connection', url: 'https://github.com/Fisherman7676/slave.git'        
+            git credentialsId: 'github_connection', url: 'https://github.com/Fisherman7676/Slave.git'        
             }
         }
     stage('sync master'){
@@ -25,17 +25,17 @@ pipeline {
             sh 'git clone --bare ${://github.com/Fisherman7676/Master.git}master.git'
             dir("master.git"){
                 // add remote repo
-                sh 'git remote add --mirror=fetch second ${https://github.com/Fisherman7676/slave.git}'
+                sh 'git remote add --mirror=fetch Slave ${https://github.com/Fisherman7676/Slave.git}'
                 
                 //update loacl from first
                 sh 'git fetch origin --tags'
                 
             // update the local copy with the second repository
-            sh 'git fetch second --tags'
+            sh 'git fetch Slave --tags'
             
             // sync back the second repository
-            sh 'git push second --all'
-            sh 'git push second --tags'
+            sh 'git push Slave --all'
+            sh 'git push Slave --tags'
         }
     }
 }
